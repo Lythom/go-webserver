@@ -16,7 +16,6 @@ var store = sessions.NewCookieStore([]byte(key))
 func main() {
 
 	type User struct {
-		// Première lettre en majuscule obligatoire pour indiquer le caractère publie (exporté) du champ
 		Username string
 		Password string
 	}
@@ -29,8 +28,6 @@ func main() {
 		if r.Method == "POST" {
 			var user User
 			dec := json.NewDecoder(r.Body)
-			// A supprimer. En cas de changement d'API (nouveaux champs) ça évitera de cracher le serveur
-			// dec.DisallowUnknownFields()
 			err := dec.Decode(&user)
 			if err != nil {
 				http.Error(w, "Bad Request", http.StatusBadRequest)
@@ -48,11 +45,9 @@ func main() {
 				}
 
 			}
+		} else {
+			http.Error(w, "Bad Request", http.StatusBadRequest)
 		}
-		// Si pas implémenté, ne pas répondre. Supprimer ce code.
-		// else {
-		// 	http.Error(w, "Unauthorized", http.StatusUnauthorized)
-		// }
 	})
 
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {

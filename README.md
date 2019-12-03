@@ -1,13 +1,14 @@
 # Go webserver example
 
-## Running
+## Lancer le serveur
 
 go server.go
 
 
-## debugging
+## Déboguer
 
 Debugging Go code using VS Code
 Run the command Go: Install/Update Tools, select dlv, press Ok to install/update delve
 press "debug" and setup a default go debbugging profile in "launch.json"
-ress debug
+
+Avec GoLand, Cliquer sur le triangle vert à côté de la fonction main dans server.go, choisir déboguer.
