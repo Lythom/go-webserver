@@ -120,8 +120,8 @@ func main() {
 
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "auth")
-		auth, ok := session.Values["authenticated"].(bool)
-		if !auth || !ok {
+		_, ok := session.Values["authenticated"].(bool)
+		if !ok {
 			fmt.Fprintf(w, "Visiteur")
 		} else {
 			fmt.Fprintf(w, "Authentifié")
@@ -130,14 +130,14 @@ func main() {
 
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "auth")
-		session.Values["authenticated"] = false
+		delete(session.Values, "authenticated")
 		session.Save(r, w)
 		fmt.Fprintf(w, "Vous avez été deconnecté")
 	})
 
 	http.HandleFunc("/save", func(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "auth")
-		session.Values["authenticated"] = false
+		delete(session.Values, "authenticated")
 		session.Save(r, w)
 		fmt.Fprintf(w, "Vous avez été deconnecté")
 	})
